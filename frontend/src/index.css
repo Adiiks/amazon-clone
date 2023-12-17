@@ -13,3 +13,12 @@ body {
     min-height: 100vh;
 }
 
+select, button {
+    cursor: pointer;
+}
+
+select, input, button {
+    outline: none;
+    font-family: inherit;
+}
+
