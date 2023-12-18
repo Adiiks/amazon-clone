@@ -11,3 +11,8 @@ spring:
 server:
   error:
     include-message: always
+
+security:
+  jwt:
+    secret-key: 2964f1841554c20358ac6aa71e97c74fe8be7f0e5892d89768c001060f0aec51
+    expiration-time: 28800000 # 8 hours
