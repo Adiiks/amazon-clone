@@ -1,5 +1,6 @@
+import { Link } from 'react-router-dom';
 import styles from './header.module.css';
-import logo from '../../assets/logo.svg';
+import Logo from './Logo';
 import SearchBar from './SearchBar';
 import { IoCartOutline } from "react-icons/io5";
 
@@ -7,14 +8,14 @@ const Navbar = () => {
     return (
         <div className={styles.navbar}>
             <div className={`${styles.logo} ${styles['nav-item']}`}>
-                <img src={logo} alt="amazon logo" />
+                <Logo titleColor='white' arrowColor='white' />
             </div>
             <SearchBar />
             <div className={styles['user-menu']}>
-                <div className={styles['nav-item']}>
+                <Link to='/auth/sign-in' className={styles['nav-item']}>
                     <p>Hello, sign in</p>
                     <p>Account</p>
-                </div>
+                </Link>
                 <div className={styles['nav-item']}>
                     <p>Returns</p>
                     <p>& Orders</p>

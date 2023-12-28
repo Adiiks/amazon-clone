@@ -22,3 +22,13 @@ select, input, button {
     font-family: inherit;
 }
 
+a {
+    text-decoration: none;
+}
+
+
+
+#root {
+    min-height: inherit;
+}
+

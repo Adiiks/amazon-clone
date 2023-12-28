@@ -7,8 +7,11 @@
     gap: 1rem;
 }
 
-.logo {
+.img-logo {
     cursor: pointer;
+}
+
+.logo {
     padding: 0 !important;
 }
 
@@ -71,9 +74,11 @@
 }
 
 .nav-item {
+    cursor: pointer;
     border: 1px solid transparent;
     color: white;
     padding: 5px;
+    display: block;
 }
 
 .nav-item p {
@@ -93,6 +98,7 @@
 }
 
 .cart {
+    cursor: pointer;
     border: 1px solid transparent;
     color: white;
     padding: 5px;
