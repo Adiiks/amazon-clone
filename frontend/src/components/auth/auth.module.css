@@ -1,7 +1,8 @@
 .auth-container {
     border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
     box-shadow: 0 0 3px #ccc;
-    padding: 1rem;
+    padding: 1.25rem;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -30,12 +31,25 @@
 
 .input-wrapper input {
     border-radius: 4px;
-    border: 1px solid black;
+    border: 2px solid black;
     padding: 5px;
 }
 
 .input-wrapper input:focus {
     box-shadow: 0 0 0 3px #c8f3fa;
+}
+
+.input-error {
+    border-color: red !important;
+}
+
+.input-error:focus {
+    box-shadow: 0 0 0 3px rgb(238, 184, 184) !important;
+}
+
+.error {
+    color: #c40000;
+    font-size: 12px;
 }
 
 .auth-container form button {
