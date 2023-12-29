@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import pl.adrian.amazon.data.AuthDataBuilder;
+import pl.adrian.amazon.dto.LoginRequest;
 import pl.adrian.amazon.dto.RegistrationRequest;
 import pl.adrian.amazon.service.AuthService;
 
@@ -70,5 +71,32 @@ class AuthControllerTest {
                 .andExpect(status().isCreated());
 
         verify(authService).register(any());
+    }
+
+    @DisplayName("Login - invalid body")
+    @Test
+    void login_InvalidBody() throws Exception {
+        LoginRequest request = new LoginRequest("asdsadas", "");
+
+        mockMvc.perform(post("/api/auth/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", hasSize(2)));
+
+        verify(authService, times(0)).login(any());
+    }
+
+    @DisplayName("Login - success")
+    @Test
+    void login() throws Exception {
+        LoginRequest request = AuthDataBuilder.buildLoginRequest();
+
+        mockMvc.perform(post("/api/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk());
+
+        verify(authService).login(any());
     }
 }
