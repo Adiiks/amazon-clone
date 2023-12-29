@@ -1,4 +1,11 @@
 .auth-container {
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.auth-card {
     border-radius: 5px;
     border: 1px solid rgba(0, 0, 0, 0.1);
     box-shadow: 0 0 3px #ccc;
@@ -6,14 +13,13 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    width: 350px;
 }
 
-.auth-container h1 {
+.auth-card h1 {
     font-weight: 400;
 }
 
-.auth-container form {
+.auth-card form {
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -52,24 +58,64 @@
     font-size: 12px;
 }
 
-.auth-container form button {
+.auth-card form button {
     padding: 5px;
     border-radius: 5px;
     border-color: transparent;
     background-color: #FFD814;;
 }
 
-.auth-container form button:hover {
+.auth-card form button:hover {
     background-color: #F7CA00;
 }
 
-.auth-container a, .auth-container a:visited {
+.auth-card a, .auth-card a:visited {
     color: #0066c0;
 }
 
-.auth-container a:hover {
+.auth-card a:hover {
     color: #c45500;
     text-decoration: underline;
+}
+
+.link-divider {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.link-divider h5 {
+    font-weight: 400;
+    font-size: 13px;
+    color: #767676;
+    white-space: nowrap;
+}
+
+.line {
+    border-top: 1px solid #e7e7e7;
+    width: 100%;
+}
+
+.link-wrapper {
+    width: 350px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 3px #ccc;
+    padding: 5px;
+}
+
+.link-wrapper a {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.link-wrapper a, .link-wrapper a:visited {
+    color: black;
+}
+
+.link-wrapper:hover {
+    background-color: #F7FAFA;
 }
 
 @media (max-width: 400px) {
