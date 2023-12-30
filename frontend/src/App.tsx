@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage';
 import AuthPage from './pages/AuthPage';
 import Registration from './components/auth/Registration';
 import Login from './components/auth/Login';
+import AuthContextProvider from './store/auth-context';
 
 const router = createBrowserRouter([
   {
@@ -30,7 +31,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-      <RouterProvider router={router} />
+      <AuthContextProvider>
+        <RouterProvider router={router} />
+      </AuthContextProvider>
       <Toaster />
     </>
   )

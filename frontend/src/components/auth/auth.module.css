@@ -118,6 +118,20 @@
     background-color: #F7FAFA;
 }
 
+.login-error-box {
+    border-radius: 5px;
+    border: 1px solid #c40000;
+    padding: .5rem;
+    text-align: center;
+}
+
+.login-error-box h4 {
+    font-weight: 400;
+    font-size: 17px;
+    color: #c40000;
+    margin-bottom: 10px;
+}
+
 @media (max-width: 400px) {
 
     .auth-container {
