@@ -40,8 +40,8 @@ const AuthContextProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     function handleLogout(token: string) {
         const expireAt = jwtDecode(token).exp;
-        const issuedAt = jwtDecode(token).iat;
-        const time = (expireAt! - issuedAt!) * 100;
+        const dateNow = new Date().getTime();
+        const time = (expireAt! - dateNow!) * 100;
 
         if (time <= 0) {
             removeToken();
