@@ -8,12 +8,14 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.server.ResponseStatusException;
 import pl.adrian.amazon.data.AuthDataBuilder;
 import pl.adrian.amazon.dto.RegistrationRequest;
 import pl.adrian.amazon.entity.User;
 import pl.adrian.amazon.repository.UserRepository;
+import pl.adrian.amazon.security.JwtUtils;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -28,6 +30,12 @@ class AuthServiceTest {
     @Mock
     UserRepository userRepository;
 
+    @Mock
+    AuthenticationManager authenticationManager;
+
+    @Mock
+    JwtUtils jwtUtils;
+
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Captor
@@ -37,7 +45,9 @@ class AuthServiceTest {
     void setUp() {
         authService = new AuthService(
                 userRepository,
-                passwordEncoder
+                passwordEncoder,
+                authenticationManager,
+                jwtUtils
         );
     }
 
