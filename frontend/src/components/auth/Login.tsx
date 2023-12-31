@@ -27,7 +27,7 @@ const Login = () => {
 
         axios.post(url, body)
         .then(({ data }) => {
-            setToken(data.token)
+            setToken(data.token, data.expiresIn)
             navigate('/');
         })
             .catch(({ response }) => {

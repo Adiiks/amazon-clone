@@ -1,10 +1,9 @@
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
 import React, { createContext, useEffect, useState } from "react";
 
 type AuthContextValue = {
     token: string | null,
-    setToken: (token: string | null) => void
+    setToken: (token: string | null, expiresIn: number | undefined) => void
 }
 
 type AuthProviderProps = {
@@ -20,7 +19,9 @@ const AuthContextProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
     let logoutTimer: number | undefined;
 
-    function setTokenHandler(token: string | null) {
+    function setTokenHandler(token: string | null, expiresIn: number | undefined) {
+        token && localStorage.setItem('expiresIn', expiresIn + '');
+
         setToken(token);
     }
 
@@ -29,23 +30,24 @@ const AuthContextProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
         localStorage.setItem('token', token);
 
-        handleLogout(token);
+        handleLogout();
     }
 
     function removeToken() {
         delete axios.defaults.headers.common["Authorization"];
 
         localStorage.removeItem('token');
+        localStorage.removeItem('expiresIn');
     }
 
-    function handleLogout(token: string) {
-        const expireAt = jwtDecode(token).exp;
-        const dateNow = new Date().getTime();
-        const time = (expireAt! - dateNow!) * 100;
+    function handleLogout() {
+        const expireAt = new Date(new Date().getTime() + parseInt(localStorage.getItem('expiresIn')!));
+        const dateNow = new Date();
 
-        if (time <= 0) {
+        if (expireAt < dateNow) {
             removeToken();
         } else {
+            const time = expireAt.getTime() - dateNow.getTime();
             clearTimeout(logoutTimer);
             logoutTimer = setTimeout(removeToken, time);
         }
