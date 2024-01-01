@@ -20,7 +20,10 @@ const AuthContextProvider: React.FC<AuthProviderProps> = ({ children }) => {
     let logoutTimer: number | undefined;
 
     function setTokenHandler(token: string | null, expiresIn: number | undefined) {
-        token && localStorage.setItem('expiresIn', expiresIn + '');
+        if (token) {
+            const expiresInDate = new Date().getTime() + expiresIn!;
+            localStorage.setItem('expiresIn', expiresInDate + '');
+        }
 
         setToken(token);
     }
@@ -41,7 +44,7 @@ const AuthContextProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
 
     function handleLogout() {
-        const expireAt = new Date(new Date().getTime() + parseInt(localStorage.getItem('expiresIn')!));
+        const expireAt = new Date(parseInt(localStorage.getItem('expiresIn')!));
         const dateNow = new Date();
 
         if (expireAt < dateNow) {
