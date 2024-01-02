@@ -6,11 +6,22 @@ import AuthPage from './pages/AuthPage';
 import Registration from './components/auth/Registration';
 import Login from './components/auth/Login';
 import AuthContextProvider from './store/auth-context';
+import MyAccount from './components/my-account/MyAccount';
+import ProtectedRoute from './utils/ProtectedRoute';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <HomePage />
+    element: <HomePage />,
+    children: [
+      {
+        path: 'my-account',
+        element: 
+          <ProtectedRoute>
+            <MyAccount />
+          </ProtectedRoute>
+      }
+    ]
   },
   {
     path: '/auth',

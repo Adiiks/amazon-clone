@@ -41,7 +41,7 @@ const Navbar = () => {
             </div>
             <SearchBar />
             <div className={styles['user-menu']}>
-                <Link to={user ? '/your-account' : '/auth/sign-in'} className={styles['nav-item']}>
+                <Link to={user ? '/my-account' : '/auth/sign-in'} className={styles['nav-item']}>
                     <p>Hello, {user ? userFirstName : 'sign in'}</p>
                     <p>Account</p>
                 </Link>
