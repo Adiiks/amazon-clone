@@ -52,6 +52,13 @@
 			<version>0.11.5</version>
 		</dependency>
 
+		<!--> CLOUDINARY - for image storing  <-->
+		<dependency>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary-http44</artifactId>
+			<version>1.36.0</version>
+		</dependency>
+
 		<!--> Others  <-->
 		<dependency>
 			<groupId>com.mysql</groupId>

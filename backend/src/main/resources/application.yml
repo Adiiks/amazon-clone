@@ -7,6 +7,9 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
+  servlet:
+    multipart:
+      max-file-size: 2MB
 
 server:
   error:
@@ -16,3 +19,8 @@ security:
   jwt:
     secret-key: 2964f1841554c20358ac6aa71e97c74fe8be7f0e5892d89768c001060f0aec51
     expiration-time: 28800000 # 8 hours
+
+cloudinary:
+  cloud-name: {cloud name}
+  api-key: {api key}
+  api-secret: {api secret}
