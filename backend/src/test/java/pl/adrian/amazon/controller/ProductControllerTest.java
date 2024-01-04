@@ -58,7 +58,7 @@ class ProductControllerTest {
     @DisplayName("Create product - body validation failed")
     @Test
     void createProductInvalidBody() throws Exception {
-        ProductRequest request = new ProductRequest("", "", BigDecimal.ZERO, -1);
+        ProductRequest request = new ProductRequest("", "", BigDecimal.ZERO, -1, null);
         MockMultipartFile image = new MockMultipartFile("image", "image content".getBytes());
         MockMultipartFile jsonRequest = new MockMultipartFile("request", "", MediaType.APPLICATION_JSON.toString(),
                 objectMapper.writeValueAsBytes(request));
@@ -67,7 +67,7 @@ class ProductControllerTest {
                 .file(image)
                 .file(jsonRequest))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", hasSize(4)));
+                .andExpect(jsonPath("$", hasSize(5)));
 
         verify(productService, times(0)).createProduct(any(), any(), anyString());
     }

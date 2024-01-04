@@ -20,6 +20,9 @@ public record ProductRequest(
 
         @NotNull(message = "Product quantity is required")
         @Min(value = 1, message = "Product quantity must be at least 1")
-        Integer quantity
+        Integer quantity,
+
+        @NotNull(message = "Category ID is required")
+        Integer categoryId
 ) {
 }

@@ -16,6 +16,7 @@ import pl.adrian.amazon.data.UserDataBuilder;
 import pl.adrian.amazon.dto.ProductRequest;
 import pl.adrian.amazon.entity.Product;
 import pl.adrian.amazon.entity.User;
+import pl.adrian.amazon.repository.CategoryRepository;
 import pl.adrian.amazon.repository.ProductRepository;
 import pl.adrian.amazon.repository.UserRepository;
 import pl.adrian.amazon.utils.ImageValidator;
@@ -40,6 +41,9 @@ class ProductServiceImplTest {
     @Mock
     ImageService imageService;
 
+    @Mock
+    CategoryRepository categoryRepository;
+
     ImageValidator imageValidator = new ImageValidator();
 
     ProductConverter productConverter = new ProductConverter();
@@ -56,7 +60,8 @@ class ProductServiceImplTest {
                 userRepository,
                 imageService,
                 imageValidator,
-                productConverter
+                productConverter,
+                categoryRepository
         );
 
         loggedUser = UserDataBuilder.buildUser();
@@ -74,6 +79,21 @@ class ProductServiceImplTest {
         verify(productRepository, times(0)).save(any());
     }
 
+    @DisplayName("Create new product - category not found")
+    @Test
+    void createProductCategoryNotFound() {
+        MockMultipartFile image = new MockMultipartFile("image", "image.png", "", "image content".getBytes());
+        ProductRequest request = ProductDataBuilder.buildProductRequest();
+
+        when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(loggedUser));
+        when(categoryRepository.existsById(anyInt())).thenReturn(false);
+
+        assertThrows(ResponseStatusException.class, () ->
+                productService.createProduct(image, request, loggedUser.getEmail()));
+
+        verify(productRepository, times(0)).save(any());
+    }
+
     @DisplayName("Create new product - success")
     @Test
     void createProduct() {
@@ -84,6 +104,7 @@ class ProductServiceImplTest {
         when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(loggedUser));
         when(imageService.uploadImage(any())).thenReturn(imageUrl);
         when(productRepository.save(any())).thenReturn(ProductDataBuilder.buildProduct());
+        when(categoryRepository.existsById(anyInt())).thenReturn(true);
 
         Integer productId = productService.createProduct(image, request, loggedUser.getEmail());
 

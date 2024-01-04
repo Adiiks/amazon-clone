@@ -12,7 +12,8 @@ public class ProductDataBuilder {
                 "Movie - Mission Impossible: Fallout",
                 "Movie with Tom Cruise as a main actor",
                 BigDecimal.valueOf(15.99),
-                5
+                5,
+                1
         );
     }
 
@@ -25,6 +26,7 @@ public class ProductDataBuilder {
                 .price(BigDecimal.valueOf(15.99))
                 .quantity(5)
                 .soldByUser(UserDataBuilder.buildUser())
+                .category(CategoryDataBuilder.buildCategory())
                 .build();
     }
 }
