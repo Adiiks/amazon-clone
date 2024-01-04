@@ -17,7 +17,7 @@ select, button {
     cursor: pointer;
 }
 
-select, input, button {
+select, input, button, textarea {
     outline: none;
     font-family: inherit;
 }

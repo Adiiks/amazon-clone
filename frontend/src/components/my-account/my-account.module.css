@@ -43,3 +43,11 @@
 .text-wrapper p {
     color: #565959;
 }
+
+@media (max-width: 700px) {
+    
+    .account-options-container {
+        justify-content: center;
+    }
+
+  }

@@ -8,6 +8,7 @@ import Login from './components/auth/Login';
 import AuthContextProvider from './store/auth-context';
 import MyAccount from './components/my-account/MyAccount';
 import ProtectedRoute from './utils/ProtectedRoute';
+import ProductCreation from './components/product-creation/ProductCreation';
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,13 @@ const router = createBrowserRouter([
         element: 
           <ProtectedRoute>
             <MyAccount />
+          </ProtectedRoute>
+      },
+      {
+        path: 'post-product',
+        element:
+          <ProtectedRoute>
+            <ProductCreation />
           </ProtectedRoute>
       }
     ]
