@@ -11,9 +11,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import pl.adrian.amazon.converter.ProductConverter;
+import pl.adrian.amazon.converter.UserConverter;
 import pl.adrian.amazon.data.ProductDataBuilder;
 import pl.adrian.amazon.data.UserDataBuilder;
 import pl.adrian.amazon.dto.ProductRequest;
+import pl.adrian.amazon.dto.ProductResponse;
 import pl.adrian.amazon.entity.Product;
 import pl.adrian.amazon.entity.User;
 import pl.adrian.amazon.repository.CategoryRepository;
@@ -46,7 +48,9 @@ class ProductServiceImplTest {
 
     ImageValidator imageValidator = new ImageValidator();
 
-    ProductConverter productConverter = new ProductConverter();
+    UserConverter userConverter = new UserConverter();
+
+    ProductConverter productConverter = new ProductConverter(userConverter);
 
     @Captor
     ArgumentCaptor<Product> productAc;
@@ -123,5 +127,31 @@ class ProductServiceImplTest {
 
         // assert product ID returned by product service
         assertNotNull(productId);
+    }
+
+    @DisplayName("Get product by id - not found")
+    @Test
+    void getProductByIdNotFound() {
+        when(productRepository.findById(anyInt())).thenReturn(Optional.empty());
+
+        assertThrows(ResponseStatusException.class, () -> productService.getProductById(1));
+    }
+
+    @DisplayName("Get product by id - success")
+    @Test
+    void getProductById() {
+        Product productDb = ProductDataBuilder.buildProduct();
+
+        when(productRepository.findById(anyInt())).thenReturn(Optional.of(productDb));
+
+        ProductResponse response =  productService.getProductById(productDb.getId());
+
+        assertEquals(productDb.getId(), response.id());
+        assertEquals(productDb.getImageUrl(), response.imageUrl());
+        assertEquals(productDb.getName(), response.name());
+        assertEquals(productDb.getDescription(), response.description());
+        assertEquals(productDb.getPrice(), response.price());
+        assertEquals(productDb.getQuantity(), response.quantity());
+        assertNotNull(response.soldByUser());
     }
 }

@@ -89,4 +89,13 @@ class ProductControllerTest {
 
         verify(productService).createProduct(any(), any(), anyString());
     }
+
+    @DisplayName("Get product by id - success")
+    @Test
+    void getProductById() throws Exception {
+        mockMvc.perform(get("/api/products/1"))
+                .andExpect(status().isOk());
+
+        verify(productService).getProductById(anyInt());
+    }
 }

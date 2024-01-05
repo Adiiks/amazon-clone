@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import pl.adrian.amazon.converter.ProductConverter;
 import pl.adrian.amazon.dto.ProductRequest;
+import pl.adrian.amazon.dto.ProductResponse;
 import pl.adrian.amazon.entity.Category;
 import pl.adrian.amazon.entity.Product;
 import pl.adrian.amazon.entity.User;
@@ -45,6 +46,14 @@ public class ProductServiceImpl implements ProductService {
         productToSave.setSoldByUser(loggedUser);
 
         return productRepository.save(productToSave).getId();
+    }
+
+    @Override
+    public ProductResponse getProductById(Integer productId) {
+        return productRepository.findById(productId)
+                .map(productConverter::productToProductResponse)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "Product not exists"));
     }
 
     private User findUser(String email) {
