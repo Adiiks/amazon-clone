@@ -9,6 +9,7 @@ import AuthContextProvider from './store/auth-context';
 import MyAccount from './components/my-account/MyAccount';
 import ProtectedRoute from './utils/ProtectedRoute';
 import ProductCreation from './components/product-creation/ProductCreation';
+import ProductDetails from './components/product-details/ProductDetails';
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
           <ProtectedRoute>
             <ProductCreation />
           </ProtectedRoute>
+      },
+      {
+        path: 'product-details/:productId',
+        element: <ProductDetails />
       }
     ]
   },
