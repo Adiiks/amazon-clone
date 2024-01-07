@@ -10,6 +10,7 @@ import MyAccount from './components/my-account/MyAccount';
 import ProtectedRoute from './utils/ProtectedRoute';
 import ProductCreation from './components/product-creation/ProductCreation';
 import ProductDetails from './components/product-details/ProductDetails';
+import CategoriesContextProvider from './store/categories-context';
 
 const router = createBrowserRouter([
   {
@@ -18,7 +19,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: 'my-account',
-        element: 
+        element:
           <ProtectedRoute>
             <MyAccount />
           </ProtectedRoute>
@@ -56,7 +57,9 @@ function App() {
   return (
     <>
       <AuthContextProvider>
-        <RouterProvider router={router} />
+        <CategoriesContextProvider>
+          <RouterProvider router={router} />
+        </CategoriesContextProvider>
       </AuthContextProvider>
       <Toaster />
     </>
