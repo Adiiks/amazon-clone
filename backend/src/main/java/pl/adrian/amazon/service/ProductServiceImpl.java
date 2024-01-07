@@ -2,6 +2,9 @@ package pl.adrian.amazon.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +19,8 @@ import pl.adrian.amazon.repository.CategoryRepository;
 import pl.adrian.amazon.repository.ProductRepository;
 import pl.adrian.amazon.repository.UserRepository;
 import pl.adrian.amazon.utils.ImageValidator;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -54,6 +59,18 @@ public class ProductServiceImpl implements ProductService {
                 .map(productConverter::productToProductResponse)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Product not exists"));
+    }
+
+    @Override
+    public Page<ProductResponse> getProductsByCategoryId(Integer categoryId, Pageable pageable) {
+        Page<Product> productPage = productRepository.findByCategory_IdOrderByIdDesc(categoryId, pageable);
+
+        List<ProductResponse> products = productPage.getContent()
+                .stream()
+                .map(productConverter::productToProductResponse)
+                .toList();
+
+        return new PageImpl<>(products, productPage.getPageable(), productPage.getTotalElements());
     }
 
     private User findUser(String email) {

@@ -8,6 +8,10 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import pl.adrian.amazon.converter.ProductConverter;
@@ -23,6 +27,7 @@ import pl.adrian.amazon.repository.ProductRepository;
 import pl.adrian.amazon.repository.UserRepository;
 import pl.adrian.amazon.utils.ImageValidator;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -153,5 +158,20 @@ class ProductServiceImplTest {
         assertEquals(productDb.getPrice(), response.price());
         assertEquals(productDb.getQuantity(), response.quantity());
         assertNotNull(response.soldByUser());
+    }
+
+    @DisplayName("Get list of products by category id - success")
+    @Test
+    void getProductsByCategoryId() {
+        Product productDb = ProductDataBuilder.buildProduct();
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<Product> productPage = new PageImpl<>(List.of(productDb), pageable, 1);
+
+        when(productRepository.findByCategory_IdOrderByIdDesc(anyInt(), any())).thenReturn(productPage);
+
+        Page<ProductResponse> response = productService.getProductsByCategoryId(productDb.getCategory().getId(),
+                pageable);
+
+        assertEquals(productPage.getContent().size(), response.getContent().size());
     }
 }

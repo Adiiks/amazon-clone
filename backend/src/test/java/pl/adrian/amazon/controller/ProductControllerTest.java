@@ -8,6 +8,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
@@ -50,6 +52,7 @@ class ProductControllerTest {
     void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(productController)
                 .setControllerAdvice(new ValidationErrorControllerAdvice())
+                .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
                 .build();
 
         loggedUser = UserDataBuilder.buildUser();
@@ -97,5 +100,16 @@ class ProductControllerTest {
                 .andExpect(status().isOk());
 
         verify(productService).getProductById(anyInt());
+    }
+
+    @DisplayName("Get list of products based on category id - success")
+    @Test
+    void getProductsByCategoryId() throws Exception {
+        mockMvc.perform(get("/api/products/category/1")
+                        .param("page", "0")
+                        .param("size", "10"))
+                .andExpect(status().isOk());
+
+        verify(productService).getProductsByCategoryId(anyInt(), any());
     }
 }

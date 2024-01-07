@@ -2,6 +2,8 @@ package pl.adrian.amazon.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -9,6 +11,8 @@ import pl.adrian.amazon.dto.ProductRequest;
 import pl.adrian.amazon.dto.ProductResponse;
 import pl.adrian.amazon.security.AuthenticationFacade;
 import pl.adrian.amazon.service.ProductService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
@@ -28,5 +32,11 @@ public class ProductController {
     @GetMapping("/{productId}")
     public ProductResponse getProductById(@PathVariable Integer productId) {
         return productService.getProductById(productId);
+    }
+
+    @PreAuthorize("permitAll()")
+    @GetMapping("/category/{categoryId}")
+    public Page<ProductResponse> getProductsByCategoryId(@PathVariable Integer categoryId, Pageable pageable) {
+        return productService.getProductsByCategoryId(categoryId, pageable);
     }
 }
