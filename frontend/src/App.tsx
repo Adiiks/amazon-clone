@@ -11,6 +11,7 @@ import ProtectedRoute from './utils/ProtectedRoute';
 import ProductCreation from './components/product-creation/ProductCreation';
 import ProductDetails from './components/product-details/ProductDetails';
 import CategoriesContextProvider from './store/categories-context';
+import HomeContainer from './components/home/HomeContainer';
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: 'product-details/:productId',
         element: <ProductDetails />
+      },
+      {
+        path: '',
+        element: <HomeContainer />
       }
     ]
   },

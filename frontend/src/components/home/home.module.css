@@ -1,0 +1,29 @@
+.home-container {
+    padding: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    background-color: #E3E6E6;
+}
+
+.products-list-container {
+    padding: 1.25rem 1rem;
+    background-color: white;
+}
+
+.products-list-container h2 {
+    margin-bottom: .5rem;
+}
+
+.products-list {
+    display: flex;
+    gap: .5rem;
+    overflow-x: auto;
+}
+
+.product-image-wrapper {
+    cursor: pointer;
+    height: 200px;
+    max-width: 250px;
+    min-width: 150px;
+}

@@ -26,7 +26,7 @@ const ProductDetails = () => {
     const quantityOptions = [];
     for (let i = 1; i <= product?.quantity!; i++) {
         quantityOptions.push(
-            <option>{i}</option>
+            <option key={i}>{i}</option>
         );
     }
 
