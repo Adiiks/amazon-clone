@@ -190,4 +190,32 @@ class ProductServiceImplTest {
 
         assertEquals(productPage.getContent().size(), response.getContent().size());
     }
+
+    @DisplayName("Get list of products without search param - success")
+    @Test
+    void getProductsWithoutSearch() {
+        Product productDb = ProductDataBuilder.buildProduct();
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<Product> productPage = new PageImpl<>(List.of(productDb), pageable, 1);
+
+        when(productRepository.findAll(any(Pageable.class))).thenReturn(productPage);
+
+        Page<ProductResponse> response = productService.getProducts(null, pageable);
+
+        assertEquals(productPage.getContent().size(), response.getContent().size());
+    }
+
+    @DisplayName("Get list of products with search param - success")
+    @Test
+    void getProductsWithSearch() {
+        Product productDb = ProductDataBuilder.buildProduct();
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<Product> productPage = new PageImpl<>(List.of(productDb), pageable, 1);
+
+        when(productRepository.findByNameContainsIgnoreCase(anyString(), any(Pageable.class))).thenReturn(productPage);
+
+        Page<ProductResponse> response = productService.getProducts("Reacher", pageable);
+
+        assertEquals(productPage.getContent().size(), response.getContent().size());
+    }
 }

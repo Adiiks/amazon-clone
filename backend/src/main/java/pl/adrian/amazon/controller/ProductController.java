@@ -40,4 +40,10 @@ public class ProductController {
                                                          @RequestParam(required = false) String search) {
         return productService.getProductsByCategoryId(categoryId, pageable, search);
     }
+
+    @PreAuthorize("permitAll()")
+    @GetMapping
+    public Page<ProductResponse> getProducts(@RequestParam(required = false) String search, Pageable pageable) {
+        return productService.getProducts(search, pageable);
+    }
 }

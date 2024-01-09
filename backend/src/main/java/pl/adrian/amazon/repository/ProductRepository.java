@@ -10,4 +10,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     Page<Product> findByCategory_IdOrderByIdDesc(Integer id, Pageable pageable);
 
     Page<Product> findByCategory_IdAndNameContainsIgnoreCase(Integer id, String name, Pageable pageable);
+
+    Page<Product> findByNameContainsIgnoreCase(String name, Pageable pageable);
 }

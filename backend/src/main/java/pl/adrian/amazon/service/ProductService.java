@@ -13,4 +13,6 @@ public interface ProductService {
     ProductResponse getProductById(Integer productId);
 
     Page<ProductResponse> getProductsByCategoryId(Integer categoryId, Pageable pageable, String search);
+
+    Page<ProductResponse> getProducts(String search, Pageable pageable);
 }

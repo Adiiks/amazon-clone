@@ -124,4 +124,27 @@ class ProductControllerTest {
 
         verify(productService).getProductsByCategoryId(anyInt(), any(), anyString());
     }
+
+    @DisplayName("Get products list without search param - success")
+    @Test
+    void getProductsWithoutSearch() throws Exception {
+        mockMvc.perform(get("/api/products")
+                    .param("page", "0")
+                    .param("size", "10"))
+                .andExpect(status().isOk());
+
+        verify(productService).getProducts(isNull(), any());
+    }
+
+    @DisplayName("Get products list with search param - success")
+    @Test
+    void getProductsWithSearch() throws Exception {
+        mockMvc.perform(get("/api/products")
+                        .param("page", "0")
+                        .param("size", "10")
+                        .param("search", "Reacher"))
+                .andExpect(status().isOk());
+
+        verify(productService).getProducts(anyString(), any());
+    }
 }

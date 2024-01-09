@@ -76,6 +76,20 @@ public class ProductServiceImpl implements ProductService {
         return new PageImpl<>(products, productPage.getPageable(), productPage.getTotalElements());
     }
 
+    @Override
+    public Page<ProductResponse> getProducts(String search, Pageable pageable) {
+        Page<Product> productPage = (StringUtils.hasText(search)) ?
+                productRepository.findByNameContainsIgnoreCase(search, pageable) :
+                productRepository.findAll(pageable);
+
+        List<ProductResponse> productsResponse = productPage.getContent()
+                .stream()
+                .map(productConverter::productToProductResponse)
+                .toList();
+
+        return new PageImpl<>(productsResponse, productPage.getPageable(), productPage.getTotalElements());
+    }
+
     private User findUser(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
