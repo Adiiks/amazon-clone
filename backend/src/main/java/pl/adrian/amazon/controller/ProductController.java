@@ -36,7 +36,8 @@ public class ProductController {
 
     @PreAuthorize("permitAll()")
     @GetMapping("/category/{categoryId}")
-    public Page<ProductResponse> getProductsByCategoryId(@PathVariable Integer categoryId, Pageable pageable) {
-        return productService.getProductsByCategoryId(categoryId, pageable);
+    public Page<ProductResponse> getProductsByCategoryId(@PathVariable Integer categoryId, Pageable pageable,
+                                                         @RequestParam(required = false) String search) {
+        return productService.getProductsByCategoryId(categoryId, pageable, search);
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import pl.adrian.amazon.converter.ProductConverter;
@@ -62,8 +63,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductResponse> getProductsByCategoryId(Integer categoryId, Pageable pageable) {
-        Page<Product> productPage = productRepository.findByCategory_IdOrderByIdDesc(categoryId, pageable);
+    public Page<ProductResponse> getProductsByCategoryId(Integer categoryId, Pageable pageable, String search) {
+        Page<Product> productPage = (StringUtils.hasText(search)) ?
+                productRepository.findByCategory_IdAndNameContainsIgnoreCase(categoryId, search, pageable) :
+                productRepository.findByCategory_IdOrderByIdDesc(categoryId, pageable);
 
         List<ProductResponse> products = productPage.getContent()
                 .stream()

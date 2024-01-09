@@ -12,5 +12,5 @@ public interface ProductService {
 
     ProductResponse getProductById(Integer productId);
 
-    Page<ProductResponse> getProductsByCategoryId(Integer categoryId, Pageable pageable);
+    Page<ProductResponse> getProductsByCategoryId(Integer categoryId, Pageable pageable, String search);
 }

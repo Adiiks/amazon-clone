@@ -25,8 +25,7 @@ public class Product {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Lob
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", nullable = false, columnDefinition = "mediumtext")
     private String description;
 
     @Column(name = "price", nullable = false, precision = 19, scale = 2)

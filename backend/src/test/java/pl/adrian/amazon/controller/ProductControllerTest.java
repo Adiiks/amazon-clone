@@ -102,14 +102,26 @@ class ProductControllerTest {
         verify(productService).getProductById(anyInt());
     }
 
-    @DisplayName("Get list of products based on category id - success")
+    @DisplayName("Get list of products based on category id without search param - success")
     @Test
-    void getProductsByCategoryId() throws Exception {
+    void getProductsByCategoryIdWithoutSearch() throws Exception {
         mockMvc.perform(get("/api/products/category/1")
                         .param("page", "0")
                         .param("size", "10"))
                 .andExpect(status().isOk());
 
-        verify(productService).getProductsByCategoryId(anyInt(), any());
+        verify(productService).getProductsByCategoryId(anyInt(), any(), isNull());
+    }
+
+    @DisplayName("Get list of products based on category id with search param - success")
+    @Test
+    void getProductsByCategoryIdWithSearch() throws Exception {
+        mockMvc.perform(get("/api/products/category/1")
+                        .param("page", "0")
+                        .param("size", "10")
+                        .param("search", "reacher"))
+                .andExpect(status().isOk());
+
+        verify(productService).getProductsByCategoryId(anyInt(), any(), anyString());
     }
 }

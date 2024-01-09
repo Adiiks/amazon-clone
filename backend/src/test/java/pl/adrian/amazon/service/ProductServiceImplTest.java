@@ -160,9 +160,9 @@ class ProductServiceImplTest {
         assertNotNull(response.soldByUser());
     }
 
-    @DisplayName("Get list of products by category id - success")
+    @DisplayName("Get list of products by category id without search param - success")
     @Test
-    void getProductsByCategoryId() {
+    void getProductsByCategoryIdWithoutSearch() {
         Product productDb = ProductDataBuilder.buildProduct();
         Pageable pageable = PageRequest.of(0, 10);
         Page<Product> productPage = new PageImpl<>(List.of(productDb), pageable, 1);
@@ -170,7 +170,23 @@ class ProductServiceImplTest {
         when(productRepository.findByCategory_IdOrderByIdDesc(anyInt(), any())).thenReturn(productPage);
 
         Page<ProductResponse> response = productService.getProductsByCategoryId(productDb.getCategory().getId(),
-                pageable);
+                pageable, null);
+
+        assertEquals(productPage.getContent().size(), response.getContent().size());
+    }
+
+    @DisplayName("Get list of products by category id with search param - success")
+    @Test
+    void getProductsByCategoryIdWithSearch() {
+        Product productDb = ProductDataBuilder.buildProduct();
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<Product> productPage = new PageImpl<>(List.of(productDb), pageable, 1);
+
+        when(productRepository.findByCategory_IdAndNameContainsIgnoreCase(anyInt(), anyString(), any()))
+                .thenReturn(productPage);
+
+        Page<ProductResponse> response = productService.getProductsByCategoryId(productDb.getCategory().getId(),
+                pageable, "Reacher");
 
         assertEquals(productPage.getContent().size(), response.getContent().size());
     }
