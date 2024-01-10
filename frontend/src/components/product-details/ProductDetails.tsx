@@ -5,7 +5,7 @@ import { useParams } from 'react-router';
 import axios from 'axios';
 import { backendUrl } from '../../environments';
 import toast from 'react-hot-toast';
-import { extractNumberAfterDot, extractNumberBeforeDot } from '../../utils/PriceUtility';
+import ProductPrice from '../common/ProductPrice';
 
 const ProductDetails = () => {
     const [product, setProduct] = useState<Product>();
@@ -43,11 +43,7 @@ const ProductDetails = () => {
                 <div className={styles['product-basic-info-section']}>
                     <h2>{product?.name}</h2>
                     <hr />
-                    <span className={styles['product-price-wrapper']}>
-                        <span className={styles['sub-price']}>$</span>
-                        <span className={styles['price']}>{extractNumberBeforeDot(product?.price!)}</span>
-                        <span className={styles['sub-price']}>{extractNumberAfterDot(product?.price!)}</span>
-                    </span>
+                    <ProductPrice price={product?.price!} />
                     <p>{product?.description}</p>
                 </div>
 

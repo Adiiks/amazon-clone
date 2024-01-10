@@ -12,6 +12,7 @@ import ProductCreation from './components/product-creation/ProductCreation';
 import ProductDetails from './components/product-details/ProductDetails';
 import CategoriesContextProvider from './store/categories-context';
 import HomeContainer from './components/home/HomeContainer';
+import SearchProductsResult from './components/search-products-result/SearchProductsResult';
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: 'product-details/:productId',
         element: <ProductDetails />
+      },
+      {
+        path: 'search/products',
+        element: <SearchProductsResult />
       },
       {
         path: '',

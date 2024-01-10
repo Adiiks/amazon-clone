@@ -26,28 +26,6 @@
     font-weight: 400;
 }
 
-.product-price-wrapper {
-    position: relative;
-}
-
-.price {
-    font-weight: bold;
-    font-size: 23px;
-    margin-left: 12px;
-    margin-right: 1px;
-}
-
-.sub-price {
-    color: #0F1111;
-    font-size: 13px;
-    position: absolute;
-    top: -2px;
-}
-
-.product-price-wrapper > span:first-of-type {
-    left: 4px;
-}
-
 .product-purchase-container {
     height: 290px;
     padding: 1rem;
