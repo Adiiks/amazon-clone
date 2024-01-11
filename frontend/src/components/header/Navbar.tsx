@@ -8,10 +8,12 @@ import User from '../../models/User';
 import { AuthContext } from '../../store/auth-context';
 import { backendUrl } from '../../environments';
 import axios from 'axios';
+import { CartContext } from '../../store/cart-context';
 
 const Navbar = () => {
     const [user, setUser] = useState<User>();
     const authContext = useContext(AuthContext);
+    const { getTotalItems } = useContext(CartContext);
 
     useEffect(() => {
         if (authContext.token) {
@@ -51,7 +53,7 @@ const Navbar = () => {
                 </div>
                 <div className={styles.cart}>
                     <IoCartOutline size={25} />
-                    <p>0</p>
+                    <p>{getTotalItems()}</p>
                 </div>
             </div>
         </div>

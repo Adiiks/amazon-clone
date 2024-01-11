@@ -13,6 +13,7 @@ import ProductDetails from './components/product-details/ProductDetails';
 import CategoriesContextProvider from './store/categories-context';
 import HomeContainer from './components/home/HomeContainer';
 import SearchProductsResult from './components/search-products-result/SearchProductsResult';
+import CartContextProvider from './store/cart-context';
 
 const router = createBrowserRouter([
   {
@@ -67,9 +68,11 @@ function App() {
   return (
     <>
       <AuthContextProvider>
-        <CategoriesContextProvider>
-          <RouterProvider router={router} />
-        </CategoriesContextProvider>
+        <CartContextProvider>
+          <CategoriesContextProvider>
+            <RouterProvider router={router} />
+          </CategoriesContextProvider>
+        </CartContextProvider>
       </AuthContextProvider>
       <Toaster />
     </>
