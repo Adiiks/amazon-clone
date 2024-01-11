@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import styles from './product-details.module.css';
 import Product from '../../models/Product';
 import { useParams } from 'react-router';
@@ -6,10 +6,13 @@ import axios from 'axios';
 import { backendUrl } from '../../environments';
 import toast from 'react-hot-toast';
 import ProductPrice from '../common/ProductPrice';
+import { CartContext } from '../../store/cart-context';
 
 const ProductDetails = () => {
     const [product, setProduct] = useState<Product>();
     const { productId } = useParams();
+    const { addToCart } = useContext(CartContext);
+    const selectedQuantityRef = useRef<HTMLSelectElement>(null);
 
     useEffect(() => {
         const url = `${backendUrl}products/${productId}`;
@@ -22,6 +25,12 @@ const ProductDetails = () => {
                 toast.error('Something went wrong !');
             });
     }, []);
+
+    function handleAddToCartClick() {
+        const quantitySelected = selectedQuantityRef.current?.value;
+        addToCart(product!, Number(quantitySelected));
+        toast.success('Added to Cart');
+    }
 
     const quantityOptions = [];
     for (let i = 1; i <= product?.quantity!; i++) {
@@ -55,12 +64,12 @@ const ProductDetails = () => {
                     
                     <div className={styles['quantity-selection']}>
                         <label htmlFor="quantity">Quantity: </label>
-                        <select id="quantity">
+                        <select id="quantity" ref={selectedQuantityRef}>
                             {product?.quantity! > 0 ? quantityOptions : <option>0</option>}
                         </select>
                     </div>
                     
-                    <button className={styles['add-to-cart-btn']}>Add to Cart</button>
+                    <button className={styles['add-to-cart-btn']} onClick={handleAddToCartClick}>Add to Cart</button>
                     <button className={styles['buy-now-btn']}>Buy Now</button>
 
                     <div className={styles['sold-by-info']}>

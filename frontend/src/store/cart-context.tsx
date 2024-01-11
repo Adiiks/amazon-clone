@@ -1,4 +1,5 @@
 import { createContext, useState } from "react"
+import Product from "../models/Product"
 
 type CartItem = {
     id: number,
@@ -9,7 +10,8 @@ type CartItem = {
 
 type CartContextValue = {
     items: CartItem[],
-    getTotalItems: () => number
+    getTotalItems: () => number,
+    addToCart: (product: Product, quantity: number) => void
 }
 
 type CartProviderProps = {
@@ -29,7 +31,8 @@ function saveToLocalStorage(cartItems: CartItem[]) {
 
 export const CartContext = createContext<CartContextValue>({ 
     items: [],
-    getTotalItems: () => {return 0}
+    getTotalItems: () => {return 0},
+    addToCart: () => {}
  });
 
 const CartContextProvider: React.FC<CartProviderProps> = ({ children }) => {
@@ -39,9 +42,33 @@ const CartContextProvider: React.FC<CartProviderProps> = ({ children }) => {
         return cartItems.reduce((total, item) => total + item.quantity, 0);
     }
 
+    function addToCart(product: Product, quantity: number) {
+        let cartItem = cartItems.find(item => item.id === product.id);
+        let updatedCartItems;
+
+        if (cartItem) {
+            cartItem.quantity += quantity;
+            updatedCartItems = [...cartItems]
+        } 
+        else {
+            cartItem = {
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                quantity
+            }
+
+            updatedCartItems = [...cartItems, cartItem];
+        }
+
+        saveToLocalStorage(updatedCartItems);
+        setCartItems(updatedCartItems);
+    }
+
     const contextValue: CartContextValue = {
         items: cartItems,
-        getTotalItems
+        getTotalItems,
+        addToCart
     };
 
     return (
