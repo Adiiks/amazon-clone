@@ -14,6 +14,7 @@ import CategoriesContextProvider from './store/categories-context';
 import HomeContainer from './components/home/HomeContainer';
 import SearchProductsResult from './components/search-products-result/SearchProductsResult';
 import CartContextProvider from './store/cart-context';
+import Cart from './components/cart/Cart';
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
       {
         path: 'search/products',
         element: <SearchProductsResult />
+      },
+      {
+        path: 'cart',
+        element: <Cart />
       },
       {
         path: '',

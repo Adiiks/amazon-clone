@@ -1,4 +1,5 @@
 .home-container {
+    min-height: 93vh;
     padding: 4rem;
     display: flex;
     flex-direction: column;

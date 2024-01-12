@@ -19,9 +19,11 @@ const Navbar = () => {
         if (authContext.token) {
             const url = `${backendUrl}users/user`;
 
-            axios.get(url, {headers: {
-                Authorization: 'Bearer ' + authContext.token
-            }})
+            axios.get(url, {
+                headers: {
+                    Authorization: 'Bearer ' + authContext.token
+                }
+            })
                 .then(({ data }) => {
                     setUser(data);
                 });
@@ -51,10 +53,12 @@ const Navbar = () => {
                     <p>Returns</p>
                     <p>& Orders</p>
                 </div>
-                <div className={styles.cart}>
-                    <IoCartOutline size={25} />
-                    <p>{getTotalItems()}</p>
-                </div>
+                <Link to='/cart'>
+                    <div className={styles.cart}>
+                        <IoCartOutline size={25} />
+                        <p>{getTotalItems()}</p>
+                    </div>
+                </Link>
             </div>
         </div>
     );

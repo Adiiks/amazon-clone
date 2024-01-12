@@ -1,0 +1,12 @@
+.container {
+    min-height: 93vh;
+    background-color: #EAEDED;
+    padding: 1rem 0;
+}
+
+.cart-container {
+    max-width: 900px;
+    background-color: white;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem;
+}
