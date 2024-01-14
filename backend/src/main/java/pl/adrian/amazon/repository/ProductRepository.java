@@ -5,6 +5,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import pl.adrian.amazon.entity.Product;
 
+import java.util.Collection;
+import java.util.List;
+
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     Page<Product> findByCategory_IdOrderByIdDesc(Integer id, Pageable pageable);
@@ -12,4 +15,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     Page<Product> findByCategory_IdAndNameContainsIgnoreCase(Integer id, String name, Pageable pageable);
 
     Page<Product> findByNameContainsIgnoreCase(String name, Pageable pageable);
+
+    List<Product> findByIdIn(Collection<Integer> ids);
 }

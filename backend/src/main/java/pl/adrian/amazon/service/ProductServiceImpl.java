@@ -21,6 +21,7 @@ import pl.adrian.amazon.repository.ProductRepository;
 import pl.adrian.amazon.repository.UserRepository;
 import pl.adrian.amazon.utils.ImageValidator;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -88,6 +89,16 @@ public class ProductServiceImpl implements ProductService {
                 .toList();
 
         return new PageImpl<>(productsResponse, productPage.getPageable(), productPage.getTotalElements());
+    }
+
+    @Override
+    public List<ProductResponse> getProductsByIdsList(List<Integer> ids) {
+        if (ids.isEmpty()) return Collections.emptyList();
+
+        return productRepository.findByIdIn(ids)
+                .stream()
+                .map(productConverter::productToProductResponse)
+                .toList();
     }
 
     private User findUser(String email) {

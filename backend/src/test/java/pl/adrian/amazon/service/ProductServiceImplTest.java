@@ -27,6 +27,7 @@ import pl.adrian.amazon.repository.ProductRepository;
 import pl.adrian.amazon.repository.UserRepository;
 import pl.adrian.amazon.utils.ImageValidator;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -217,5 +218,33 @@ class ProductServiceImplTest {
         Page<ProductResponse> response = productService.getProducts("Reacher", pageable);
 
         assertEquals(productPage.getContent().size(), response.getContent().size());
+    }
+
+    @DisplayName("Get list of products based on list of IDs - empty list of IDs")
+    @Test
+    void getProductsByIdsList_EmptyIdsList() {
+        List<Integer> ids = Collections.emptyList();
+
+        List<ProductResponse> products = productService.getProductsByIdsList(ids);
+
+        assertEquals(0, products.size());
+
+        verify(productRepository, times(0)).findByIdIn(anyCollection());
+    }
+
+    @DisplayName("Get list of products based on list of IDs - return one product")
+    @Test
+    void getProductsByIdsList() {
+        Product productDb = ProductDataBuilder.buildProduct();
+        List<Product> productListDb = List.of(productDb);
+        List<Integer> ids = List.of(productDb.getId());
+
+        when(productRepository.findByIdIn(anyCollection())).thenReturn(productListDb);
+
+        List<ProductResponse> products = productService.getProductsByIdsList(ids);
+
+        assertEquals(productListDb.size(), products.size());
+
+        verify(productRepository).findByIdIn(anyCollection());
     }
 }

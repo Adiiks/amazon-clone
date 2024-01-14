@@ -6,6 +6,8 @@ import org.springframework.web.multipart.MultipartFile;
 import pl.adrian.amazon.dto.ProductRequest;
 import pl.adrian.amazon.dto.ProductResponse;
 
+import java.util.List;
+
 public interface ProductService {
 
     Integer createProduct(MultipartFile image, ProductRequest product, String userEmail);
@@ -15,4 +17,6 @@ public interface ProductService {
     Page<ProductResponse> getProductsByCategoryId(Integer categoryId, Pageable pageable, String search);
 
     Page<ProductResponse> getProducts(String search, Pageable pageable);
+
+    List<ProductResponse> getProductsByIdsList(List<Integer> ids);
 }

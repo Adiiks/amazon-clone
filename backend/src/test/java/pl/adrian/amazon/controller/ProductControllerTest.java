@@ -8,7 +8,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
@@ -22,9 +21,9 @@ import pl.adrian.amazon.security.AuthenticationFacade;
 import pl.adrian.amazon.service.ProductService;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -146,5 +145,18 @@ class ProductControllerTest {
                 .andExpect(status().isOk());
 
         verify(productService).getProducts(anyString(), any());
+    }
+
+    @DisplayName("Get list of products based on list of IDs")
+    @Test
+    void getProductsByIdsList() throws Exception {
+        List<Integer> ids = List.of(1, 2, 3);
+
+        mockMvc.perform(get("/api/products/ids")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(ids)))
+                .andExpect(status().isOk());
+
+        verify(productService).getProductsByIdsList(anyList());
     }
 }

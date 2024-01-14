@@ -12,6 +12,7 @@ import pl.adrian.amazon.dto.ProductResponse;
 import pl.adrian.amazon.security.AuthenticationFacade;
 import pl.adrian.amazon.service.ProductService;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -45,5 +46,11 @@ public class ProductController {
     @GetMapping
     public Page<ProductResponse> getProducts(@RequestParam(required = false) String search, Pageable pageable) {
         return productService.getProducts(search, pageable);
+    }
+
+    @PreAuthorize("permitAll()")
+    @GetMapping("/ids")
+    public List<ProductResponse> getProductsByIdsList(@RequestBody List<Integer> ids) {
+        return productService.getProductsByIdsList(ids);
     }
 }
