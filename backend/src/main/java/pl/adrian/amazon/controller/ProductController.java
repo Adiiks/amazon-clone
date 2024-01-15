@@ -49,7 +49,7 @@ public class ProductController {
     }
 
     @PreAuthorize("permitAll()")
-    @GetMapping("/ids")
+    @PostMapping("/ids")
     public List<ProductResponse> getProductsByIdsList(@RequestBody List<Integer> ids) {
         return productService.getProductsByIdsList(ids);
     }

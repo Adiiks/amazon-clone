@@ -152,7 +152,7 @@ class ProductControllerTest {
     void getProductsByIdsList() throws Exception {
         List<Integer> ids = List.of(1, 2, 3);
 
-        mockMvc.perform(get("/api/products/ids")
+        mockMvc.perform(post("/api/products/ids")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(ids)))
                 .andExpect(status().isOk());
