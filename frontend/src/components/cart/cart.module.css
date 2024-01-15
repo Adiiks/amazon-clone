@@ -10,3 +10,137 @@
     margin: 0 auto;
     padding: 2.5rem 1.5rem;
 }
+
+.price-column-title {
+    margin-top: 2rem;
+    text-align: right;
+    color: #565959;
+}
+
+.cart-item-container {
+    margin: 1rem 0;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.img-container {
+    width: 180px;
+    height: 180px;
+}
+
+.img-container a {
+    text-align: center;
+}
+
+.img-container img {
+    width: auto;
+    margin: 0 auto;
+}
+
+.item-middle-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: .5rem;
+}
+
+.item-middle-content a:visited {
+    color: black;
+}
+
+.item-name {
+    font-size: 18px;
+}
+
+.stock-status {
+    font-family: 10px;
+}
+
+.in-stock {
+    color: #007600;
+}
+
+.out-of-stock {
+    color: red;
+}
+
+.item-actions-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    white-space: nowrap;
+}
+
+.quantity-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.quantity-input-wrapper input {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 3px 3px 3px #ccc;
+    padding: 5px;
+    width: 50px;
+    text-align: center;
+}
+
+.item-action {
+    border-left: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 0 10px;
+}
+
+.delete-action {
+    cursor: pointer;
+    color: #007600;
+}
+
+.delete-action:hover {
+    text-decoration: underline;
+}
+
+.price-container {
+    text-align: right;
+    font-weight: bold;
+    font-size: 16px;
+    margin-left: auto;
+}
+
+.summary-container {
+    text-align: end;
+    margin-top: 10px;
+}
+
+.summary {
+    font-size: 18px;
+}
+
+.btn-proceed {
+    margin-top: 1rem;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 30px;
+    background-color: #FFD814;
+}
+
+.btn-proceed:hover {
+    background-color: #F7CA00;
+}
+
+@media (max-width: 750px) {
+
+    .cart-item-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .item-middle-content {
+        text-align: center;
+    }
+
+    .summary-container {
+        text-align: center;
+    }
+}
